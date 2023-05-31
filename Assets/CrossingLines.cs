@@ -8,7 +8,6 @@ public class CrossingLines : MonoBehaviour
 {
     public Material lineMat;
     public Material sphereMat;
-    public Mesh simplePlaneMesh;
     public GUISkin guiStyle;
 
     [SerializeField] private List<Line> lineList = new List<Line>();
@@ -73,14 +72,7 @@ public class CrossingLines : MonoBehaviour
             GUILayout.BeginVertical(guiStyle.FindStyle("customBox"));
             if (GUILayout.Button("Dwie linie"))
             {
-                //clear
-                lineList.Clear();
-                intersectionList.Clear();
-
-                renderLines = true;
-                renderSpheres = true;
-
-                sizeOfIntersection = 0.04f;
+                ClearData();
 
                 //add init values
                 firstLine = new Line(
@@ -97,13 +89,7 @@ public class CrossingLines : MonoBehaviour
             }
             if (GUILayout.Button("Wiele losowych lini"))
             {
-                //clear values
-                lineList.Clear();
-                intersectionList.Clear();
-
-                renderLines = true;
-                renderSpheres = true;
-
+                ClearData();
                 manageMultipleLines = true;
             }
             GUILayout.EndVertical();
@@ -114,6 +100,17 @@ public class CrossingLines : MonoBehaviour
         if (manageTwoLines)
             ManageTwoLinesUI();
 
+    }
+
+    private void ClearData()
+    {
+        lineList.Clear();
+        intersectionList.Clear();
+
+        renderLines = true;
+        renderSpheres = true;
+
+        sizeOfIntersection = 0.04f;
     }
 
     private void ManageMultipleLinesUI()
@@ -169,10 +166,7 @@ public class CrossingLines : MonoBehaviour
         GUILayout.Box("Ostatni czas wykrywania w sekundach: " + lastTime.ToString(), guiStyle.box);
         if (GUILayout.Button("Cofnij", guiStyle.button))
         {
-            lineList.Clear();
-            intersectionList.Clear();
-            renderLines = true;
-            renderSpheres = true;
+            ClearData();
 
             manageMultipleLines = false;
         }
@@ -224,8 +218,7 @@ public class CrossingLines : MonoBehaviour
 
         if (GUILayout.Button("Cofnij"))
         {
-            lineList.Clear();
-            intersectionList.Clear();
+            ClearData();
             manageTwoLines = false;
         }
         GUILayout.EndVertical();
